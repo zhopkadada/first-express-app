@@ -1,6 +1,7 @@
-const sequelize = require("../customerDB");
+const sequelize = require("../databases/customerDB");
 const { DataTypes } = require("sequelize");
 const { Product } = require("./productModels");
+const { CustomerImage } = require("./imagesModels");
 
 const Customer = sequelize.define("customer", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -21,6 +22,9 @@ const CartProduct = sequelize.define("cart_device", {
 
 Customer.hasOne(Cart);
 Cart.belongsTo(Customer);
+
+Customer.hasOne(CustomerImage, {as: 'image'})
+CustomerImage.belongsTo(Customer)
 
 Cart.hasMany(CartProduct);
 CartProduct.belongsTo(Cart);

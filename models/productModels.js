@@ -1,5 +1,6 @@
-const sequelize = require("../productDB");
+const sequelize = require("../databases/productDB");
 const { DataTypes } = require("sequelize");
+const { ProductImage } = require("./imagesModels");
 
 const Product = sequelize.define("product", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -21,6 +22,9 @@ const Type = sequelize.define("type", {
 const TypeBrand = sequelize.define("typeBrand", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
+
+Product.hasMany(ProductImage, { as: "images" });
+ProductImage.belongsTo(Product);
 
 Brand.hasMany(Product);
 Type.hasMany(Product);
